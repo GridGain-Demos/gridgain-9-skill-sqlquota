@@ -1,0 +1,29 @@
+# --- GridGain license (NEVER commit) ---
+gridgain-license.json
+*.license.json
+
+# --- Gradle ---
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# --- IDE / tooling local state ---
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.code-workspace
+
+# Claude Code: keep .claude/skills/ committed (they're part of the deliverable),
+# but exclude per-user permissions/config.
+.claude/settings.json
+.claude/settings.local.json
+
+# --- macOS ---
+.DS_Store
+
+# --- Logs / scratch ---
+*.log
+/tmp/
+/out/
