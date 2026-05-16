@@ -96,6 +96,24 @@ public final class ClusterInitClient {
         return resp;
     }
 
+    /**
+     * PATCH the cluster-scoped configuration tree at {@code /management/v1/configuration/cluster}.
+     * This is the REST equivalent of the CLI's {@code cluster config update <key>=<value>} command —
+     * applied to an already-initialized cluster at runtime, rather than via the init payload.
+     */
+    public HttpResponse<String> patchClusterConfig(String hoconDiff) throws Exception {
+        log.info("PATCH /management/v1/configuration/cluster body: {}", hoconDiff);
+        HttpRequest req = HttpRequest.newBuilder()
+            .uri(URI.create(baseUrl + "/management/v1/configuration/cluster"))
+            .timeout(Duration.ofSeconds(30))
+            .header("Content-Type", "text/plain")
+            .method("PATCH", HttpRequest.BodyPublishers.ofString(hoconDiff))
+            .build();
+        HttpResponse<String> resp = http.send(req, HttpResponse.BodyHandlers.ofString());
+        log.info("PATCH cluster config -> {} body={}", resp.statusCode(), resp.body());
+        return resp;
+    }
+
     private HttpResponse<String> get(String path) throws Exception {
         HttpRequest req = HttpRequest.newBuilder()
             .uri(URI.create(baseUrl + path))
